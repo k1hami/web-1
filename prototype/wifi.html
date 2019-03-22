@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Nokia WiFi</title>
+        <meta name="prototype">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <style>
+            body {
+                margin: 0px !important;
+            }
+            header {
+                position: relative;
+                top: 0;
+                left: 0;
+                width: 100%;
+                z-index: 200;
+            }
+            #header {
+                margin: auto;
+                width: 1440px;
+            } 
+            #sub-header {
+                position: relative;
+                top: 20px;
+                margin: auto;
+                width: 1440px;
+                height: 70px;
+            }
+            #set-height {
+                display: block;
+            }
+            .fixHeader {
+                position: fixed !important;
+                top: -87px !important;
+            }
+            .fixVideo {
+                position: fixed !important;
+                top: 30px !important;
+            }
+            .continiuScroll {
+                position: absolute;
+                top: 760px !important;
+            }
+            #videoBox {
+                position: absolute;
+                height: 1280px;
+                overflow-y: scroll;
+                top: 151px;
+                width: 100%;
+                z-index: 2;
+                transform-origin: top;
+                transform: scale(1);
+                /*background-color: aqua;*/
+            }
+            .v0 {
+              margin: auto;
+              width: 1080px;
+              
+            }
+            p font-family helvetica {
+              font-size: 24px;
+            }
+        </style>
+        
+    </head>
+    <body>
+        <header>
+            <div id="header"><img src="nav.png" width="1440px"></div>
+            <div id="sub-header"><img src="sub.png" width="1440px"></div>
+        </header>
+        <div style="position: absolute; z-index: 3; width: 100%; top: 250px;"><h1 style="font-family: arial; font-size: 48px; font-weight: 700; text-align: center;">Wi-Fi that works</h1></div>
+        
+        <div id="set-height"></div>
+        <p id="time"></p>
+        <div id="videoBox" class="">
+            <div class="v0">
+                <video id="v1" class="v0" tabindex="0" autobuffer="autobuffer" preload="preload">
+                    <source type="video/webm; codecs=&quot;vp8, vorbis&quot;" src="">
+                    <source type="video/ogg; codecs=&quot;theora, vorbis&quot;" src="">
+                    <source type="video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;" src="wi-fi.mp4">
+                    <p>Sorry, your browser does not support the &lt;video&gt; element.</p>
+                </video>
+            </div>
+        </div>
+        <div style="top: 1780px; position: relative; z-index: 4; background-color: white;">
+            <div style="width: 1440px; margin: auto;"><img src="body.png" width=1440></div>
+        </div>
+
+        <script>
+            
+            var frameNumber = 0, // start video at frame 0
+              // lower numbers = faster playback
+              playbackConst = 102,
+              // get page height from video duration
+              setHeight = document.getElementById("v0"),
+              // select video element
+              vid = document.getElementById("v1");
+            // var vid = $('#v0')[0]; // jquery option
+
+            // dynamically set the page height according to video length
+            vid.addEventListener("loadedmetadata", function() {
+              setHeight.style.height = Math.floor(vid.duration) * playbackConst + "1px";
+            });
+
+            // Use requestAnimationFrame for smooth playback
+            function scrollPlay() {
+              var frameNumber = window.pageYOffset / playbackConst;
+              vid.currentTime = frameNumber;
+              window.requestAnimationFrame(scrollPlay);
+            }
+
+            window.requestAnimationFrame(scrollPlay);
+        </script>
+        <script>
+            var wrap = $(document);
+            var video = $("#videoBox");
+            wrap.on("scroll", function(e) { 
+                //alert("A");
+                if (wrap.scrollTop() > 120 && wrap.scrollTop() < 731) {
+                    //$(function() {
+                        //$(window).scroll(function() {
+                            //var mass = 'scale' + '(' + Math.max(1, 1 - 0.0008*$(this).scrollTop()) + ')';
+                            //$('#videoBox').css({'transform': mass});
+                        //});
+                    //});
+                //if (wrap.scrollTop() > 305 && wrap.scrollTop() < 420 ) {
+                    //alert("S");
+                    video.addClass("fixVideo");
+                    video.removeClass("continiuScroll");
+                    
+                } else if (wrap.scrollTop() > 730 ) {
+                        //alert("S");
+                        video.removeClass("fixVideo");
+                        video.addClass("continiuScroll");
+                } else {
+                        video.removeClass("continiuScroll");
+                        video.removeClass("fixVideo");
+                        //var mass = 'scale' + '(' + Math.max(1, .5 + 0.001*$(this).scrollTop()) + ')';
+                        //$('.v0').css({'transform': mass});
+                }
+            });
+            //$(function() {
+                //$(window).scroll(function() {
+                    //var mass = Math.max(1200, 1440 - 0.1*$(this).scrollTop()) + 'px';
+                    //$('.v0').css({'width': mass});
+                //});
+            //});
+            
+        </script>
+        <script>
+            var wrap = $(document);
+            var subHead = $("header");
+            wrap.on("scroll", function(e) { 
+                //alert("A");
+                if (wrap.scrollTop() > 87 ) {
+                    subHead.addClass("fixHeader");     
+                    
+                } else {
+                        //alert("S");
+                        subHead.removeClass("fixHeader");
+                }
+            });
+        </script>
+    </body>
+</html>
